@@ -17,37 +17,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.algamoney.api.model.Categoria;
-import com.example.algamoney.api.repository.CategoriaRepository;
+import com.example.algamoney.api.model.Pessoa;
+import com.example.algamoney.api.repository.PessoaRepository;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaResource {
+@RequestMapping("/pessoas")
+public class PessoaResource {
 
 	@Autowired
-	private CategoriaRepository repository;
+	private PessoaRepository repository;
 
 	@GetMapping
-	public List<Categoria> listar() {
+	public List<Pessoa> listar() {
 		return repository.findAll();
 	}
 
 	@PostMapping
-	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
-		Categoria categoriaSalva = this.repository.save(categoria);
+	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
+		Pessoa pessoaSalva = this.repository.save(pessoa);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}")
-				.buildAndExpand(categoriaSalva.getCodigo()).toUri();
+				.buildAndExpand(pessoaSalva.getCodigo()).toUri();
 //		versão mais nova do Spring Boot já implementa a location do recurso
 //		response.setHeader("Location", uri.toASCIIString());
 
-		return ResponseEntity.created(uri).body(categoriaSalva);
+		return ResponseEntity.created(uri).body(pessoaSalva);
 	}
 
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
-		Optional<Categoria> categoria = this.repository.findById(codigo);
-		if (categoria.isPresent())
-			return ResponseEntity.ok(categoria.get());
+	public ResponseEntity<Pessoa> buscarPorCodigo(@PathVariable Long codigo) {
+		Optional<Pessoa> pessoa = this.repository.findById(codigo);
+
+		if (pessoa.isPresent())
+			return ResponseEntity.ok(pessoa.get());
 
 		return ResponseEntity.notFound().build();
 	}
