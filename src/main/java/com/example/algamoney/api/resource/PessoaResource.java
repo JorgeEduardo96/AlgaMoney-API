@@ -1,7 +1,6 @@
 package com.example.algamoney.api.resource;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -53,12 +52,14 @@ public class PessoaResource {
 
 	@GetMapping("/{codigo}")
 	public ResponseEntity<Pessoa> buscarPorCodigo(@PathVariable Long codigo) {
-		Optional<Pessoa> pessoa = this.repository.findById(codigo);
-
-		if (pessoa.isPresent())
-			return ResponseEntity.ok(pessoa.get());
-
-		return ResponseEntity.notFound().build();
+		return this.repository.findById(codigo).map(pessoa -> ResponseEntity.ok(pessoa))
+				.orElse(ResponseEntity.notFound().build());
+		
+		/*	Utilizando isPresent()
+		 * Optional<Categoria> categoria = this.categoriaRepository.findById(codigo);
+		 * return categoria.isPresent() ? ResponseEntity.ok(categoria.get()) :
+		 * ResponseEntity.notFound().build();
+		 */
 	}
 
 	@DeleteMapping("/{codigo}")
@@ -72,7 +73,7 @@ public class PessoaResource {
 		Pessoa pessoaSalva = this.service.atualizar(codigo, pessoa);
 		return ResponseEntity.ok(pessoaSalva);
 	}
-	
+
 	@PutMapping("/{codigo}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void atualizarPropriedadeAtivo(@PathVariable Long codigo, @RequestBody Boolean ativo) {

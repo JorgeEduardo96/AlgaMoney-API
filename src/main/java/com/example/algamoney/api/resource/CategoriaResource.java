@@ -1,7 +1,6 @@
 package com.example.algamoney.api.resource;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -27,7 +26,7 @@ public class CategoriaResource {
 
 	@Autowired
 	private CategoriaRepository repository;
-	
+
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
@@ -39,7 +38,7 @@ public class CategoriaResource {
 	@PostMapping
 	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
 		Categoria categoriaSalva = this.repository.save(categoria);
-		
+
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getCodigo()));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
@@ -47,11 +46,14 @@ public class CategoriaResource {
 
 	@GetMapping("/{codigo}")
 	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
-		Optional<Categoria> categoria = this.repository.findById(codigo);
-		if (categoria.isPresent())
-			return ResponseEntity.ok(categoria.get());
-
-		return ResponseEntity.notFound().build();
+		return this.repository.findById(codigo).map(categoria -> ResponseEntity.ok(categoria))
+				.orElse(ResponseEntity.notFound().build());
+		
+		/*	Utilizando isPresent()
+		 * Optional<Categoria> categoria = this.repository.findById(codigo); return
+		 * categoria.isPresent() ? ResponseEntity.ok(categoria.get()) :
+		 * ResponseEntity.notFound().build();
+		 */
 	}
 
 }
