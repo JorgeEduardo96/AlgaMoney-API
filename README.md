@@ -35,3 +35,4 @@ O projeto utiliza o Maven para gerenciar as depedências.
 - hibernate-java8
 - jackson-datatype-jsr310
 - commons-lang3
+- hibernate-jpamodelgen
