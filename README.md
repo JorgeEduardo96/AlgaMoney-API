@@ -36,3 +36,5 @@ O projeto utiliza o Maven para gerenciar as depedências.
 - jackson-datatype-jsr310
 - commons-lang3
 - hibernate-jpamodelgen
+- spring-boot-starter-security
+- spring-security-oauth2
