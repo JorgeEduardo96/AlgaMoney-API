@@ -203,7 +203,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"nome\": \"Jorge Eduardo Primo da Silva\",\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"logradouro\": \"Av. Brasil\",\r\n            \"numero\": \"340\",\r\n            \"complemento\": \"PrÃ³x a Subway do Arruda\",\r\n            \"bairro\": \"Ponto de Parada\",\r\n            \"cep\": \"52041370\",\r\n            \"cidade\": \"Recife\",\r\n            \"estado\": \"PE\"\r\n        }\r\n    }",
+							"raw": "{\r\n        \"nome\": \"Jorge Eduardo Primo da Silva\",\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"logradouro\": \"Av. Brasil\",\r\n            \"numero\": \"340\",\r\n            \"complemento\": \"Próx a Subway do Arruda\",\r\n            \"bairro\": \"Ponto de Parada\",\r\n            \"cep\": \"52041370\",\r\n            \"cidade\": \"Recife\",\r\n            \"estado\": \"PE\"\r\n        }\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -265,7 +265,7 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "LanÃ§amento",
+			"name": "Lançamento",
 			"item": [
 				{
 					"name": "Buscar",
@@ -291,22 +291,16 @@
 					"name": "Pesquisar",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "admin",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY0MTExMTksInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9ST0xFIl0sImp0aSI6ImMxYjAzYjVjLWQ5YzgtNDc4Yy1iNzVmLTZjNGQxNzUxZjkxYyIsImNsaWVudF9pZCI6ImFuZ3VsYXIiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.Jct1ALMBCnzR9fO8f8sOhgUbgHgNj7CGTGVS_UsknIg",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "localhost:8080/lancamentos?size=3&page=2&dataVencimentoDe=2017-06-10",
 							"host": [
@@ -435,6 +429,55 @@
 								{
 									"key": "grant_type",
 									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/oauth/token",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "@ngul@r0",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "angular",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJhdGkiOiJlMDc0ZGJhNC04NDNmLTQ4OGUtYjBjNy0yNjAyMDI4Y2ExNjIiLCJleHAiOjE1OTY0OTczMjEsImF1dGhvcml0aWVzIjpbIlJPTEVfUk9MRSJdLCJqdGkiOiIxZTRiMTI2Yi1mYmM5LTQzNzMtODAxNy05MjhjMzYzMjM1MjUiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.cuiyJ1eGQhujVauzRQ9eVzVC-kPEcRNE3voVkNI8p7s",
 									"type": "text"
 								}
 							]
