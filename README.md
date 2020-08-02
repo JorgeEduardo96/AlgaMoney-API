@@ -38,3 +38,4 @@ O projeto utiliza o Maven para gerenciar as depedências.
 - hibernate-jpamodelgen
 - spring-boot-starter-security
 - spring-security-oauth2
+- spring-security-jwt
