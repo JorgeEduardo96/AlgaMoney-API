@@ -15,6 +15,7 @@ Projeto do curso Fullstack da AlgaWorks.
 - Versionamento: GIT (GitHub)
 
 ## Estrutura do Projeto
+- com.example.algamoney.api.config: Pacote responsável por configurações diversas da API.
 - com.example.algamoney.api.event: Pacote de para tratamento e capturas de eventos.
 - com.example.algamoney.api.exceptionhandler: Pacote responsável pela captura e tratamento de exceções.
 - com.example.algamoney.api.model: Pacote das entidades do projeto.
