@@ -268,6 +268,40 @@
 			"name": "Lançamento",
 			"item": [
 				{
+					"name": "Heroku",
+					"item": [
+						{
+							"name": "Listar",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY5MzM0MzksInVzZXJfbmFtZSI6ImFkbWluQGFsZ2Ftb25leS5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIxN2Y1MWIwOS00ODM4LTQ1NzItYmJjNi01N2Q5NWQ4ODgzYjIiLCJjbGllbnRfaWQiOiJtb2JpbGUiLCJzY29wZSI6WyJyZWFkIl19.8Y5cm9HSxdnKavWLRTSKnbKhxfsC3zCQLpv7no1l2Xg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://algamoney-api-jjr.herokuapp.com/lancamentos/",
+									"protocol": "https",
+									"host": [
+										"algamoney-api-jjr",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"lancamentos",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Buscar",
 					"request": {
 						"method": "GET",
@@ -288,6 +322,41 @@
 					"response": []
 				},
 				{
+					"name": "Resumo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY5MjQ0MjIsInVzZXJfbmFtZSI6ImFkbWluQGFsZ2Ftb25leS5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIwOGZlMDZlZS04NDdkLTQyMGItOWJiZi1kODQ4YmM5NjZmNDMiLCJjbGllbnRfaWQiOiJtb2JpbGUiLCJzY29wZSI6WyJyZWFkIl19.WPA12XdPy5_L6CGtlYqhpbcL354q7u-m1w6JAdBBQgc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/lancamentos?resumo&descricao=Salário",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lancamentos"
+							],
+							"query": [
+								{
+									"key": "resumo",
+									"value": null
+								},
+								{
+									"key": "descricao",
+									"value": "Salário"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Pesquisar",
 					"request": {
 						"auth": {
@@ -297,7 +366,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY0MTExMTksInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9ST0xFIl0sImp0aSI6ImMxYjAzYjVjLWQ5YzgtNDc4Yy1iNzVmLTZjNGQxNzUxZjkxYyIsImNsaWVudF9pZCI6ImFuZ3VsYXIiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.Jct1ALMBCnzR9fO8f8sOhgUbgHgNj7CGTGVS_UsknIg",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY3NjI5MjUsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9ST0xFIl0sImp0aSI6IjU3MGE4YTY3LWU5N2YtNDQwYy1iMzU4LTg2MmJmOWEzYTY3MCIsImNsaWVudF9pZCI6ImFuZ3VsYXIiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.wfrdkzUEWgaU_oxTs1-Fk1bTwk25RxTBO4NegA4sJls",
 								"type": "text"
 							}
 						],
@@ -389,6 +458,77 @@
 			"name": "Token",
 			"item": [
 				{
+					"name": "Heroku",
+					"item": [
+						{
+							"name": "Novo Acces Token - Heroku",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "m0b1l30",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "mobile",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "client",
+											"value": "mobile",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "admin@algamoney.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										}
+									],
+									"options": {
+										"urlencoded": {}
+									}
+								},
+								"url": {
+									"raw": "https://algamoney-api-jjr.herokuapp.com/oauth/token",
+									"protocol": "https",
+									"host": [
+										"algamoney-api-jjr",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"oauth",
+										"token"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Novo Acces Token",
 					"request": {
 						"auth": {
@@ -396,12 +536,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "@ngul@r0",
+									"value": "m0b1l30",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "angular",
+									"value": "mobile",
 									"type": "string"
 								}
 							]
@@ -413,12 +553,12 @@
 							"urlencoded": [
 								{
 									"key": "client",
-									"value": "angular",
+									"value": "mobile",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "admin",
+									"value": "admin@algamoney.com",
 									"type": "text"
 								},
 								{
@@ -431,7 +571,10 @@
 									"value": "password",
 									"type": "text"
 								}
-							]
+							],
+							"options": {
+								"urlencoded": {}
+							}
 						},
 						"url": {
 							"raw": "localhost:8080/oauth/token",
@@ -474,13 +617,11 @@
 									"key": "grant_type",
 									"value": "refresh_token",
 									"type": "text"
-								},
-								{
-									"key": "refresh_token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJhdGkiOiJlMDc0ZGJhNC04NDNmLTQ4OGUtYjBjNy0yNjAyMDI4Y2ExNjIiLCJleHAiOjE1OTY0OTczMjEsImF1dGhvcml0aWVzIjpbIlJPTEVfUk9MRSJdLCJqdGkiOiIxZTRiMTI2Yi1mYmM5LTQzNzMtODAxNy05MjhjMzYzMjM1MjUiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.cuiyJ1eGQhujVauzRQ9eVzVC-kPEcRNE3voVkNI8p7s",
-									"type": "text"
 								}
-							]
+							],
+							"options": {
+								"urlencoded": {}
+							}
 						},
 						"url": {
 							"raw": "localhost:8080/oauth/token",
@@ -491,6 +632,31 @@
 							"path": [
 								"oauth",
 								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke Refresh Token",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4OTk4NzksInVzZXJfbmFtZSI6ImFkbWluQGFsZ2Ftb25leS5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIwZGY1OTk5NS0zMzZjLTQwZGEtYmJlYy02N2VjYTY4NzY4ZGEiLCJjbGllbnRfaWQiOiJtb2JpbGUiLCJzY29wZSI6WyJyZWFkIl19.msoGejlQSFhwjopUfwdBWVHSENvQlg7VaY03Vb1po9c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/tokens/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tokens",
+								""
 							]
 						}
 					},
