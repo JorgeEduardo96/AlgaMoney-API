@@ -1,4 +1,4 @@
-package com.example.algamoney.api.repository.lancamento;
+package com.example.algamoney.api.repository.query;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

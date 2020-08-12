@@ -1,4 +1,4 @@
-package com.example.algamoney.api.repository.lancamento;
+package com.example.algamoney.api.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,7 @@ import com.example.algamoney.api.model.Pessoa_;
 import com.example.algamoney.api.model.TipoLancamento;
 import com.example.algamoney.api.repository.filter.LancamentoFilter;
 import com.example.algamoney.api.repository.projection.ResumoLancamento;
+import com.example.algamoney.api.repository.query.LancamentoRepositoryQuery;
 
 public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
