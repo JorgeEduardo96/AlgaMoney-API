@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -43,10 +44,10 @@ public class LancamentoResource {
 
 	@Autowired
 	private ApplicationEventPublisher publisher;
-	
+
 	@Autowired
 	private LancamentoService service;
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -55,7 +56,7 @@ public class LancamentoResource {
 	public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable) {
 		return this.repository.filtrar(filter, pageable);
 	}
-	
+
 	@GetMapping(params = "resumo")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
@@ -77,7 +78,7 @@ public class LancamentoResource {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoSalvo);
 	}
-	
+
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('ROLE_REMOVER_LANCAMENTO') and #oauth2.hasScope('write')")
@@ -85,12 +86,25 @@ public class LancamentoResource {
 		this.repository.deleteById(codigo);
 	}
 
+	@PutMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	public ResponseEntity<Lancamento> atualizar(@Valid @RequestBody Lancamento lancamento, @PathVariable Long codigo) {
+		try {
+			Lancamento lancamentoSalvo = this.service.atualizar(codigo, lancamento);
+
+			return ResponseEntity.ok(lancamentoSalvo);
+		} catch (IllegalArgumentException ex) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@ExceptionHandler({ PessoaInexistenteOuInativaException.class })
 	public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex) {
-		String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null, LocaleContextHolder.getLocale());
+		String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null,
+				LocaleContextHolder.getLocale());
 		String mensagemDesenvolvedor = ex.toString();
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
-		
+
 		return ResponseEntity.badRequest().body(erros);
 	}
 }
