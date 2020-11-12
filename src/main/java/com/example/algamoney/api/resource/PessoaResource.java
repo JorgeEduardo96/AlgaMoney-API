@@ -1,6 +1,8 @@
 package com.example.algamoney.api.resource;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -45,7 +47,13 @@ public class PessoaResource {
 	public Page<Pessoa> pesquisar(PessoaFilter filter, Pageable pageable) {
 		return repository.filtrar(filter, pageable);
 	}
-
+	
+	@GetMapping("/completo")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
+	public List<Pessoa> pesquisarCompleto() {
+		return repository.findAll();
+	}
+ 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
