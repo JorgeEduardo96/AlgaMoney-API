@@ -20,5 +20,4 @@ public class LancamentoFilter {
 	private LocalDate dataVencimentoAte;
 	
 	private String tipo;
-	
 }

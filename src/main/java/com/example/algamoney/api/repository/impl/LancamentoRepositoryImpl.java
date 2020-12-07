@@ -68,6 +68,8 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		return new PageImpl<>(query.getResultList(), pageable, total(filter));
 		
 	}
+	
+	
 
 	private Predicate[] criarRestricoes(LancamentoFilter filter, CriteriaBuilder builder, Root<Lancamento> root) {
 		List<Predicate> predicates = new ArrayList<>();
@@ -117,5 +119,14 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		criteria.select(builder.count(root));
 		return manager.createQuery(criteria).getSingleResult();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Lancamento> lancamentosPorPessoa(Long codigoPessoa) {
+		return manager.createQuery(
+			    "SELECT l FROM Lancamento l WHERE l.pessoa.codigo = :codigoPessoa")
+			    .setParameter("codigoPessoa", codigoPessoa)			    
+			    .getResultList();
+	}	
 
 }

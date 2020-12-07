@@ -69,6 +69,12 @@ public class LancamentoResource {
 		return this.repository.findById(codigo).map(lancamento -> ResponseEntity.ok(lancamento))
 				.orElse(ResponseEntity.notFound().build());
 	}
+	
+	@GetMapping("/{codigoPessoa}/lanc")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public List<Lancamento> lancamentosPorPessoa(@PathVariable Long codigoPessoa, LancamentoFilter filter, Pageable pageable) {
+		return this.repository.lancamentosPorPessoa(codigoPessoa);
+	}
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
