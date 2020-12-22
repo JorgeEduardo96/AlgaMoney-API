@@ -15,8 +15,7 @@ public class LancamentoEstatisticaCategoria {
 	
 	private BigDecimal total;
 
-	public LancamentoEstatisticaCategoria(Categoria categoria, BigDecimal total) {
-		super();
+	public LancamentoEstatisticaCategoria(Categoria categoria, BigDecimal total) {		
 		this.categoria = categoria;
 		this.total = total;
 	}	
