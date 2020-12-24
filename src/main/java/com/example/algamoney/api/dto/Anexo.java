@@ -1,7 +1,5 @@
 package com.example.algamoney.api.dto;
 
-import lombok.Data;
-
 public class Anexo {
 
 	private String nome;
