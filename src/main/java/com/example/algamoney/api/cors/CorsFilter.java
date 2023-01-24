@@ -15,7 +15,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.example.algamoney.api.config.property.AlgaMoneyApiProperty;
+import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 
 
 
@@ -24,7 +24,7 @@ import com.example.algamoney.api.config.property.AlgaMoneyApiProperty;
 public class CorsFilter implements Filter {
 
 	@Autowired
-	private AlgaMoneyApiProperty algaMoneyApiProperty;
+	private AlgamoneyApiProperty algaMoneyApiProperty;
 		
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)

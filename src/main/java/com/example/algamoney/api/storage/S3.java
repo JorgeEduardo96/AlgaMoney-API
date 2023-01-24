@@ -22,7 +22,7 @@ import com.amazonaws.services.s3.model.Permission;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.SetObjectTaggingRequest;
 import com.amazonaws.services.s3.model.Tag;
-import com.example.algamoney.api.config.property.AlgaMoneyApiProperty;
+import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 
 @Component
 public class S3 {
@@ -30,7 +30,7 @@ public class S3 {
 	private static final Logger logger = LoggerFactory.getLogger(S3.class);
 
 	@Autowired
-	private AlgaMoneyApiProperty property;
+	private AlgamoneyApiProperty property;
 
 	@Autowired
 	private AmazonS3 amazonS3;

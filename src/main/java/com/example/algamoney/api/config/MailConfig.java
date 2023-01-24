@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import com.example.algamoney.api.config.property.AlgaMoneyApiProperty;
+import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 
 @Configuration
 public class MailConfig {
 	
 	@Autowired
-	private AlgaMoneyApiProperty property;
+	private AlgamoneyApiProperty property;
 
 	@Bean
 	public JavaMailSender javaMailSender() {

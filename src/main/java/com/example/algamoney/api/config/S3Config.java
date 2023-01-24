@@ -15,13 +15,13 @@ import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleFilter;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleTagPredicate;
-import com.example.algamoney.api.config.property.AlgaMoneyApiProperty;
+import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 
 @Configuration
 public class S3Config {
 
 	@Autowired
-	private AlgaMoneyApiProperty property;
+	private AlgamoneyApiProperty property;
 
 	@Bean
 	public AmazonS3 amazonS3() {
