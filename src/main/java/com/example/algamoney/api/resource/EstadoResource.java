@@ -2,6 +2,7 @@ package com.example.algamoney.api.resource;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,10 @@ import com.example.algamoney.api.repository.EstadoRepository;
 
 @RestController
 @RequestMapping("/estados")
+@RequiredArgsConstructor
 public class EstadoResource {
 
-	@Autowired
-	private EstadoRepository repository;
+	private final EstadoRepository repository;
 	
 	@GetMapping
 	@PreAuthorize("isAuthenticated()")

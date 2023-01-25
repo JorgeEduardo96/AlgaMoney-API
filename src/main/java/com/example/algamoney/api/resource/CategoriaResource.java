@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -23,22 +24,21 @@ import com.example.algamoney.api.repository.CategoriaRepository;
 
 @RestController
 @RequestMapping("/categorias")
+@RequiredArgsConstructor
 public class CategoriaResource {
 
-	@Autowired
-	private CategoriaRepository repository;
+	private final CategoriaRepository repository;
 
-	@Autowired
-	private ApplicationEventPublisher publisher;
+	private final ApplicationEventPublisher publisher;
 
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and hasAuthority('SCOPE_read')")
 	public List<Categoria> listar() {
 		return repository.findAll();
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
 		Categoria categoriaSalva = this.repository.save(categoria);
 
@@ -48,16 +48,10 @@ public class CategoriaResource {
 	}
 
 	@GetMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and hasAuthority('SCOPE_read')")
 	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
-		return this.repository.findById(codigo).map(categoria -> ResponseEntity.ok(categoria))
+		return this.repository.findById(codigo).map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
-		
-		/*	Utilizando isPresent()
-		 * Optional<Categoria> categoria = this.repository.findById(codigo); return
-		 * categoria.isPresent() ? ResponseEntity.ok(categoria.get()) :
-		 * ResponseEntity.notFound().build();
-		 */
 	}
 
 }

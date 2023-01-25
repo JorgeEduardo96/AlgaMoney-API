@@ -60,7 +60,7 @@ public class LancamentoService {
 		this.validarPessoa(lancamento);
 
 		if (StringUtils.hasText(lancamento.getAnexo())) {
-			this.s3.salvar(lancamento.getAnexo());
+//			this.s3.salvar(lancamento.getAnexo());
 		}
 
 		return this.repository.save(lancamento);
@@ -73,10 +73,10 @@ public class LancamentoService {
 		}
 
 		if (StringUtils.isEmpty(lancamento.getAnexo()) && StringUtils.hasText(lancamentoSalvo.getAnexo())) {
-			this.s3.remover(lancamentoSalvo.getAnexo());
+//			this.s3.remover(lancamentoSalvo.getAnexo());
 		} else if (StringUtils.hasText(lancamento.getAnexo())
 				&& !lancamento.getAnexo().equals(lancamentoSalvo.getAnexo())) {
-			this.s3.substituir(lancamentoSalvo.getAnexo(), lancamento.getAnexo());
+//			this.s3.substituir(lancamentoSalvo.getAnexo(), lancamento.getAnexo());
 		}
 
 		BeanUtils.copyProperties(lancamento, lancamentoSalvo, "codigo");

@@ -2,6 +2,7 @@ package com.example.algamoney.api.resource;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,14 +15,13 @@ import com.example.algamoney.api.service.CidadeService;
 
 @RestController
 @RequestMapping("/cidades")
+@RequiredArgsConstructor
 public class CidadeResource {
 
-	@Autowired
-	private CidadeRepository repository;
+	private final CidadeRepository repository;
 
-	
-	@Autowired
-	private CidadeService service;
+
+	private final CidadeService service;
 
 	@GetMapping()
 	private List<Cidade> pesquisar(@RequestParam Long codigoEstado, @RequestParam String nomeCidade) {		

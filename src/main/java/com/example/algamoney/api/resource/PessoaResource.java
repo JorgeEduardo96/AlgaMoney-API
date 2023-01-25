@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -31,31 +32,29 @@ import com.example.algamoney.api.service.PessoaService;
 
 @RestController
 @RequestMapping("/pessoas")
+@RequiredArgsConstructor
 public class PessoaResource {
 
-	@Autowired
-	private PessoaRepository repository;
+	private final PessoaRepository repository;
 
-	@Autowired
-	private ApplicationEventPublisher publisher;
+	private final ApplicationEventPublisher publisher;
 
-	@Autowired
-	private PessoaService service;
+	private final PessoaService service;
 
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
 	public Page<Pessoa> pesquisar(PessoaFilter filter, Pageable pageable) {
 		return repository.filtrar(filter, pageable);
 	}
 	
 	@GetMapping("/completo")
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
 	public List<Pessoa> pesquisarCompleto() {
 		return repository.findAll();
 	}
  
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
 		Pessoa pessoaSalva = this.service.salvar(pessoa);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getCodigo()));
@@ -66,14 +65,8 @@ public class PessoaResource {
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Pessoa> buscarPorCodigo(@PathVariable Long codigo) {
-		return this.repository.findById(codigo).map(pessoa -> ResponseEntity.ok(pessoa))
+		return this.repository.findById(codigo).map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
-		
-		/*	Utilizando isPresent()
-		 * Optional<Categoria> categoria = this.categoriaRepository.findById(codigo);
-		 * return categoria.isPresent() ? ResponseEntity.ok(categoria.get()) :
-		 * ResponseEntity.notFound().build();
-		 */
 	}
 
 	@DeleteMapping("/{codigo}")
