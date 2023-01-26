@@ -1,6 +1,6 @@
 package com.example.algamoney.api.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,11 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Profile("basic-security")
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	
-	@Autowired
-	private UserDetailsService userDetailsService;	
+	private final UserDetailsService userDetailsService;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

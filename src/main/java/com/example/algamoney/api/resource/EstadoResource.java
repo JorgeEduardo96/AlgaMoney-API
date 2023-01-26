@@ -1,16 +1,14 @@
 package com.example.algamoney.api.resource;
 
-import java.util.List;
-
+import com.example.algamoney.api.model.Estado;
+import com.example.algamoney.api.repository.EstadoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.algamoney.api.model.Estado;
-import com.example.algamoney.api.repository.EstadoRepository;
+import java.util.List;
 
 @RestController
 @RequestMapping("/estados")

@@ -1,9 +1,5 @@
 package com.example.algamoney.api.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -16,12 +12,15 @@ import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleFilter;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleTagPredicate;
 import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RequiredArgsConstructor
 public class S3Config {
 
-	@Autowired
-	private AlgamoneyApiProperty property;
+	private final AlgamoneyApiProperty property;
 
 	@Bean
 	public AmazonS3 amazonS3() {

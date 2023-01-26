@@ -1,11 +1,8 @@
 package com.example.algamoney.api.security;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.algamoney.api.model.Usuario;
+import com.example.algamoney.api.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,17 +12,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.algamoney.api.model.Usuario;
-import com.example.algamoney.api.repository.UsuarioRepository;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
-
-	@Autowired
-	private MessageSource messageSource;
+	private final UsuarioRepository usuarioRepository;
+	private final MessageSource messageSource;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -6,7 +6,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -43,13 +43,12 @@ import java.util.UUID;
 
 @Configuration
 @Profile("oauth-security")
+@RequiredArgsConstructor
 public class AuthServerConfig {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private AlgamoneyApiProperty algamoneyApiProperty;
+	private final AlgamoneyApiProperty algamoneyApiProperty;
 
 	@Bean
 	public RegisteredClientRepository registeredClientRepository() {

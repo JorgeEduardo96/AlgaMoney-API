@@ -1,39 +1,27 @@
 package com.example.algamoney.api.storage;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.UUID;
-
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.*;
+import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.AccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.GroupGrantee;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.ObjectTagging;
-import com.amazonaws.services.s3.model.Permission;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.SetObjectTaggingRequest;
-import com.amazonaws.services.s3.model.Tag;
-import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class S3 {
 
 	private static final Logger logger = LoggerFactory.getLogger(S3.class);
-
-	@Autowired
-	private AlgamoneyApiProperty property;
-
-	@Autowired
-	private AmazonS3 amazonS3;
+	private final AlgamoneyApiProperty property;
+	private final AmazonS3 amazonS3;
 
 	public String salvarTemporariamente(MultipartFile arquivo) {
 		AccessControlList acl = new AccessControlList();
@@ -49,7 +37,7 @@ public class S3 {
 			PutObjectRequest putObjectRequest = new PutObjectRequest(property.getS3().getBucket(), nomeUnico,
 					arquivo.getInputStream(), objectMetadata).withAccessControlList(acl);
 
-			putObjectRequest.setTagging(new ObjectTagging(Arrays.asList(new Tag("expirar", "true"))));
+			putObjectRequest.setTagging(new ObjectTagging(List.of(new Tag("expirar", "true"))));
 
 			this.amazonS3.putObject(putObjectRequest);
 
@@ -89,7 +77,7 @@ public class S3 {
 	}
 
 	private String gerarNomeUnico(String originalFilename) {
-		return UUID.randomUUID().toString() + "_" + originalFilename;
+		return UUID.randomUUID() + "_" + originalFilename;
 	}
 
 }

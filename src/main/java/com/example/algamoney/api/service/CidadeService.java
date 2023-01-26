@@ -1,17 +1,16 @@
 package com.example.algamoney.api.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.algamoney.api.model.Cidade;
 import com.example.algamoney.api.model.Estado;
 import com.example.algamoney.api.repository.CidadeRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CidadeService {
 	
-	@Autowired 
-	private CidadeRepository repository;
+	private final CidadeRepository repository;
 	
 	public void validarCidadeCadastrada(Long codigoEstado, String nomeCidade) {
 		Cidade cidadePesquisada = this.repository.findByNome(nomeCidade);
@@ -21,7 +20,7 @@ public class CidadeService {
 			
 			cidadePesquisada.setNome(nomeCidade);
 			cidadePesquisada.getEstado().setCodigo(codigoEstado);
-			cidadePesquisada = this.repository.save(cidadePesquisada);
+			this.repository.save(cidadePesquisada);
 		}
 	}
 

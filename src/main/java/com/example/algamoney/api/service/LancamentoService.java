@@ -1,22 +1,5 @@
 package com.example.algamoney.api.service;
 
-import java.io.InputStream;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
 import com.example.algamoney.api.dto.LancamentoEstatisticaPessoa;
 import com.example.algamoney.api.mail.Mailer;
 import com.example.algamoney.api.model.Lancamento;
@@ -27,34 +10,41 @@ import com.example.algamoney.api.repository.PessoaRepository;
 import com.example.algamoney.api.repository.UsuarioRepository;
 import com.example.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
 import com.example.algamoney.api.storage.S3;
-
+import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.io.InputStream;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class LancamentoService {
 
 	private static final String DESTINATARIOS = "ROLE_PESQUISAR_LANCAMENTO";
 
 	private static final Logger logger = LoggerFactory.getLogger(LancamentoService.class);
 
-	@Autowired
-	private LancamentoRepository repository;
+	private final LancamentoRepository repository;
 
-	@Autowired
-	private PessoaRepository pessoaRepository;
+	private final PessoaRepository pessoaRepository;
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private final UsuarioRepository usuarioRepository;
 
-	@Autowired
-	private S3 s3;
+	private final S3 s3;
 
-	@Autowired
-	private Mailer mailer;
+	private final Mailer mailer;
 
 	public Lancamento salvar(Lancamento lancamento) {
 		this.validarPessoa(lancamento);

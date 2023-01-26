@@ -1,35 +1,29 @@
 package com.example.algamoney.api.mail;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.algamoney.api.model.Lancamento;
+import com.example.algamoney.api.model.Usuario;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import com.example.algamoney.api.model.Lancamento;
-import com.example.algamoney.api.model.Usuario;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class Mailer {
 
-	@Autowired
-	private JavaMailSender mailSender;
+	private final JavaMailSender mailSender;
+	private final TemplateEngine thymeleaf;
 
-	@Autowired
-	private TemplateEngine thymeleaf;
-
-//	@Autowired
-//	private LancamentoRepository repo;
 //	@EventListener
 //	private void teste(ApplicationReadyEvent event) {
 //		this.enviarEmail("jorgeeduardojr96@gmail.com", Arrays.asList("jorgeeduardo-@live.com"), "Testando", "Olá! </br> Teste ok.");
@@ -53,7 +47,7 @@ public class Mailer {
 		Map<String, Object> variaveis = new HashMap<>();
 		variaveis.put("lancamentos", vencidos);
 
-		List<String> emails = destinatarios.stream().map(u -> u.getEmail()).collect(Collectors.toList());
+		List<String> emails = destinatarios.stream().map(Usuario::getEmail).collect(Collectors.toList());
 
 		this.enviarEmail("jorgeeduardojr96@gmail.com", emails, "Lançamentos Vencidos",
 				"mail/aviso-lancamentos-vencidos", variaveis);
@@ -64,7 +58,7 @@ public class Mailer {
 			Map<String, Object> variaveis) {
 		Context context = new Context(new Locale("pt", "BR"));
 
-		variaveis.entrySet().forEach(e -> context.setVariable(e.getKey(), e.getValue()));
+		variaveis.forEach(context::setVariable);
 
 		String mensagem = thymeleaf.process(template, context);
 		this.enviarEmail(remetente, destinatarios, assunto, mensagem);

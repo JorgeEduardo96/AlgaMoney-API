@@ -1,20 +1,19 @@
 package com.example.algamoney.api.config;
 
-import java.util.Properties;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
+import java.util.Properties;
 
 @Configuration
+@RequiredArgsConstructor
 public class MailConfig {
-	
-	@Autowired
-	private AlgamoneyApiProperty property;
+
+	private final AlgamoneyApiProperty property;
 
 	@Bean
 	public JavaMailSender javaMailSender() {
