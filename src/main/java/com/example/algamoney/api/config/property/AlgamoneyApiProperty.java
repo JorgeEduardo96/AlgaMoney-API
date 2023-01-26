@@ -1,10 +1,14 @@
 package com.example.algamoney.api.config.property;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
 @ConfigurationProperties("algamoney")
+@Getter
+@Setter
 public class AlgamoneyApiProperty {
 
 	private String originPermitida;
@@ -19,22 +23,8 @@ public class AlgamoneyApiProperty {
 
 	private final Mail mail = new Mail();
 
-	public Mail getMail() {
-		return mail;
-	}
-
-	public Seguranca getSeguranca() {
-		return seguranca;
-	}
-
-	public String getOriginPermitida() {
-		return originPermitida;
-	}
-
-	public void setOriginPermitida(String originPermitida) {
-		this.originPermitida = originPermitida;
-	}
-
+	@Getter
+	@Setter
 	public static class S3 {
 
 		private String accessKeyId;
@@ -43,53 +33,19 @@ public class AlgamoneyApiProperty {
 
 		private String bucket = "aw-algamoney-arquivos";
 
-		public String getBucket() {
-			return bucket;
-		}
-
-		public void setBucket(String bucket) {
-			this.bucket = bucket;
-		}
-
-		public String getAccessKeyId() {
-			return accessKeyId;
-		}
-
-		public void setAccessKeyId(String accessKeyId) {
-			this.accessKeyId = accessKeyId;
-		}
-
-		public String getSecretAccessKey() {
-			return secretAccessKey;
-		}
-
-		public void setSecretAccessKey(String secretAccessKey) {
-			this.secretAccessKey = secretAccessKey;
-		}
 	}
 
+	@Getter
+	@Setter
 	public static class Seguranca {
 
 		private List<String> redirectsPermitidos;
 		private String authServerUrl;
 
-		public List<String> getRedirectsPermitidos() {
-			return redirectsPermitidos;
-		}
-
-		public void setRedirectsPermitidos(List<String> redirectsPermitidos) {
-			this.redirectsPermitidos = redirectsPermitidos;
-		}
-
-		public String getAuthServerUrl() {
-			return authServerUrl;
-		}
-
-		public void setAuthServerUrl(String authServerUrl) {
-			this.authServerUrl = authServerUrl;
-		}
 	}
 
+	@Getter
+	@Setter
 	public static class Mail {
 
 		private String host;
@@ -100,36 +56,5 @@ public class AlgamoneyApiProperty {
 
 		private String password;
 
-		public String getHost() {
-			return host;
-		}
-
-		public void setHost(String host) {
-			this.host = host;
-		}
-
-		public Integer getPort() {
-			return port;
-		}
-
-		public void setPort(Integer port) {
-			this.port = port;
-		}
-
-		public String getUsername() {
-			return username;
-		}
-
-		public void setUsername(String username) {
-			this.username = username;
-		}
-
-		public String getPassword() {
-			return password;
-		}
-
-		public void setPassword(String password) {
-			this.password = password;
-		}
 	}
 }

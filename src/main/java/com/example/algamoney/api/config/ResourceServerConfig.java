@@ -1,7 +1,9 @@
 package com.example.algamoney.api.config;
 
+import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -18,6 +20,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -28,7 +31,10 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class ResourceServerConfig {
+
+	private final AlgamoneyApiProperty algamoneyApiProperty;
 
 	@Bean
 	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -38,6 +44,24 @@ public class ResourceServerConfig {
 				.and()
 				.csrf().disable()
 				.oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
+
+		http.logout(
+			logoutConfig -> {
+				logoutConfig.logoutSuccessHandler(
+						(httpServletRequest, httpServletResponse, authentication) -> {
+							String returnTo = httpServletRequest.getParameter("returnTo");
+
+							if (!StringUtils.hasText(returnTo))
+								returnTo = algamoneyApiProperty.getSeguranca().getAuthServerUrl();
+
+
+							httpServletResponse.setStatus(302);
+							httpServletResponse.sendRedirect(returnTo);
+						}
+				);
+			}
+		);
+
 		return http.formLogin(Customizer.withDefaults()).build();
 	}
 
