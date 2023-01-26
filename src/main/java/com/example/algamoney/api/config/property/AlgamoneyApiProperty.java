@@ -7,7 +7,7 @@ import java.util.List;
 @ConfigurationProperties("algamoney")
 public class AlgamoneyApiProperty {
 
-	private String originPermitida = "http://local-algamoney:8000/";
+	private String originPermitida;
 
 	private final Seguranca seguranca = new Seguranca();
 

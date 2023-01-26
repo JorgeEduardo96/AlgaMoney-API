@@ -32,7 +32,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -72,13 +71,13 @@ public class LancamentoResource {
 		return ResponseEntity.ok().headers(headers).body(relatorio);
 	}
 
-	@GetMapping("/estatistica/por-dia")
+	@GetMapping("/estatisticas/por-dia")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
 	public List<LancamentoEstatisticaDia> porDia() {
 		return this.repository.porDia(LocalDate.now());
 	}
 
-	@GetMapping("/estatistica/por-categoria")
+	@GetMapping("/estatisticas/por-categoria")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
 	public List<LancamentoEstatisticaCategoria> porCategoria() {
 		return this.repository.porCategoria(LocalDate.now());
