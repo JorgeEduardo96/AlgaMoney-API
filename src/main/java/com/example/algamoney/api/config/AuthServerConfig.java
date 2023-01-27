@@ -16,14 +16,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwsEncoder;
+import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
@@ -32,6 +34,7 @@ import org.springframework.security.oauth2.server.authorization.config.ClientSet
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -49,6 +52,8 @@ public class AuthServerConfig {
 	private final PasswordEncoder passwordEncoder;
 
 	private final AlgamoneyApiProperty algamoneyApiProperty;
+
+	private static final String CUSTOM_CONSENT_PAGE_URI = "/oauth2/consent";
 
 	@Bean
 	public RegisteredClientRepository registeredClientRepository() {
@@ -101,8 +106,32 @@ public class AuthServerConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public SecurityFilterChain authServerFilterChain(HttpSecurity http) throws Exception {
-		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+		OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer =
+				new OAuth2AuthorizationServerConfigurer<>();
+		authorizationServerConfigurer
+				.authorizationEndpoint(authorizationEndpoint ->
+						authorizationEndpoint.consentPage(CUSTOM_CONSENT_PAGE_URI)); //Nova config
+
+
+		RequestMatcher endpointsMatcher = authorizationServerConfigurer
+				.getEndpointsMatcher();
+
+		http
+				.requestMatcher(endpointsMatcher)
+				.authorizeRequests(authorizeRequests ->
+						authorizeRequests.antMatchers("/login")
+								.permitAll()
+								.anyRequest().authenticated()
+				)
+				.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
+				.apply(authorizationServerConfigurer);
 		return http.formLogin(Customizer.withDefaults()).build();
+	}
+
+	//novo Bean
+	@Bean
+	public OAuth2AuthorizationConsentService authorizationConsentService() {
+		return new InMemoryOAuth2AuthorizationConsentService();
 	}
 
 	@Bean

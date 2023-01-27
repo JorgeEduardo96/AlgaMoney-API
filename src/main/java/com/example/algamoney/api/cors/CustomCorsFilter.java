@@ -14,7 +14,7 @@ import java.io.IOException;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RequiredArgsConstructor
-public class CorsFilter implements Filter {
+public class CustomCorsFilter implements Filter {
 
 	private final AlgamoneyApiProperty algaMoneyApiProperty;
 		

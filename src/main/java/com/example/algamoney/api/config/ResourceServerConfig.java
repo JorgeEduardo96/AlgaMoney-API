@@ -39,11 +39,13 @@ public class ResourceServerConfig {
 	@Bean
 	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/categorias").permitAll()
 				.anyRequest().authenticated()
 				.and()
+				.cors()
+				.and()
 				.csrf().disable()
-				.oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
+				.oauth2ResourceServer().jwt()
+				.jwtAuthenticationConverter(jwtAuthenticationConverter());
 
 		http.logout(
 			logoutConfig -> {
@@ -62,7 +64,7 @@ public class ResourceServerConfig {
 			}
 		);
 
-		return http.formLogin(Customizer.withDefaults()).build();
+		return http.formLogin(c -> c.loginPage("/login").permitAll()).build();
 	}
 
 	@Bean
